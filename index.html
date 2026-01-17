@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrew Tree Felling Services</title>
+  <title>Andrew Tree Felling Services | Pretoria</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a2e0e6a2b1.js" crossorigin="anonymous"></script>
 
@@ -23,66 +24,80 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      animation: fadeDown 1s ease;
     }
     nav h1 { font-size: 22px; font-weight: 600; }
-    nav ul {
-      display: flex;
-      gap: 25px;
-      list-style: none;
-    }
-    nav ul li a {
-      color: white;
-      font-size: 15px;
-      text-transform: uppercase;
-      transition: .3s;
-    }
+    nav ul { display: flex; gap: 25px; list-style: none; }
+    nav ul li a { color: white; font-size: 14px; text-transform: uppercase; }
     nav ul li a:hover { color: yellow; }
     .menu-toggle { display: none; font-size: 28px; cursor: pointer; }
 
     @media(max-width: 768px) {
-      nav ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: #0b6f20;
-        margin-top: 15px;
-      }
+      nav ul { display: none; flex-direction: column; width: 100%; background: #0b6f20; margin-top: 15px; }
       nav ul.show { display: flex; }
       .menu-toggle { display: block; }
     }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
-      height: 380px;
+      height: 400px;
       background: url('images/tree.jpg') center/cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: fade 1.5s ease;
     }
     .hero h2 {
-      background: rgba(0,0,0,0.5);
-      padding: 20px 35px;
+      background: rgba(0,0,0,0.6);
+      padding: 25px 40px;
       border-radius: 12px;
       color: white;
-      font-size: 32px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      animation: pop 1.5s ease;
+      font-size: 34px;
+      text-align: center;
     }
 
-    /* Section Titles */
     h2.section-title {
       text-align: center;
-      margin: 40px 0 20px;
+      margin: 50px 0 25px;
       font-size: 30px;
-      font-weight: 600;
       color: #0b6f20;
-      animation: fadeUp 1s ease;
     }
 
-    /* Picture Grid */
+    /* About */
+    .about {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* Services */
+    .icon-wrap {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      padding: 20px;
+    }
+    .icon-box {
+      background: white;
+      width: 220px;
+      text-align: center;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .icon-box i {
+      font-size: 45px;
+      color: #0b6f20;
+      margin-bottom: 10px;
+    }
+    .icon-box p {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    /* Gallery */
     .grid-gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -96,39 +111,24 @@
       object-fit: cover;
       border-radius: 14px;
       box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-      transition: transform .4s;
-      animation: fadeUp 1s ease;
-    }
-    .grid-gallery img:hover,
-    .grid-gallery video:hover {
-      transform: scale(1.05);
     }
 
-    /* Animated Icon Section */
-    .icon-wrap {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 25px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-    .icon-box {
-      background: white;
-      width: 200px;
+    /* Contact */
+    .contact {
       text-align: center;
+      font-size: 17px;
       padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: .3s;
-      animation: fadeUp 1.2s ease;
     }
-    .icon-box:hover { transform: translateY(-10px); }
-    .icon-box i {
-      font-size: 45px;
-      color: #0b6f20;
-      margin-bottom: 10px;
-      animation: bounce 2s infinite;
+    .contact a { color: #0b6f20; font-weight: 600; }
+
+    /* Map */
+    .map {
+      max-width: 1000px;
+      margin: auto;
+      height: 400px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
     }
 
     /* Footer */
@@ -137,59 +137,85 @@
       color: white;
       text-align: center;
       padding: 40px 20px;
-      margin-top: 50px;
+      margin-top: 40px;
     }
-    footer a { color: yellow; }
-
-    /* Animations */
-    @keyframes fade { from {opacity: 0;} to {opacity: 1;} }
-    @keyframes fadeUp { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
-    @keyframes fadeDown { from {opacity: 0; transform: translateY(-20px);} to {opacity: 1; transform: translateY(0);} }
-    @keyframes pop { 0% {transform: scale(0.5);} 100% {transform: scale(1);} }
-    @keyframes bounce { 0%,100%{transform: translateY(0);} 50%{transform: translateY(-8px);} }
+    footer a { color: lightgreen; margin: 0 10px; }
   </style>
 </head>
+
 <body>
 
-<!-- Navbar -->
+<!-- NAV -->
 <nav>
   <h1>Andrew Tree Felling</h1>
   <div class="menu-toggle"><i class="fas fa-bars"></i></div>
   <ul>
     <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- Hero -->
+<!-- HERO -->
 <div class="hero">
-  <h2>Professional Tree Felling Services</h2>
+  <h2>Professional Tree Felling & Emergency Services<br>Available 24/7 Across Pretoria</h2>
 </div>
 
-<!-- About -->
+<!-- ABOUT -->
 <h2 class="section-title" id="about">About Us</h2>
-<section style="text-align:center; max-width:900px; margin:auto; padding:20px;">
-  <p>We offer professional tree felling, trimming, stump removal, and landscaping services in Pretoria East. Fully insured and safety guaranteed.</p>
-</section>
-
-<!-- Icon Section -->
-<div class="icon-wrap">
-  <div class="icon-box"><i class="fas fa-tree"></i><p>Tree Felling</p></div>
-  <div class="icon-box"><i class="fas fa-leaf"></i><p>Trimming</p></div>
-  <div class="icon-box"><i class="fas fa-cut"></i><p>Shaping</p></div>
-  <div class="icon-box"><i class="fas fa-recycle"></i><p>Stump Removal</p></div>
+<div class="about">
+  <p>
+    Andrew Tree Felling Services is a trusted and professional tree service company with over
+    <strong>15 years of hands-on experience</strong> serving the entire Pretoria area.
+  </p>
+  <p>
+    We are fully insured and covered for <strong>accidental property damage and personal injury</strong>,
+    including full <strong>Workman’s Compensation</strong> for our staff, giving our clients total peace of mind.
+  </p>
+  <p>
+    Our team is available <strong>24 hours a day, 7 days a week</strong>, including emergency call-outs
+    for fallen trees, storm damage, and dangerous tree removals.
+  </p>
 </div>
 
-<!-- Gallery -->
-<h2 class="section-title" id="gallery">Our Work Gallery</h2>
+<!-- SERVICES -->
+<h2 class="section-title" id="services">Our Services</h2>
+<div class="icon-wrap">
+  <div class="icon-box">
+    <i class="fas fa-tree"></i>
+    <h4>Tree Felling</h4>
+    <p>Safe and controlled removal of trees of all sizes, including hazardous and hard-to-reach trees.</p>
+  </div>
+
+  <div class="icon-box">
+    <i class="fas fa-leaf"></i>
+    <h4>Tree Trimming</h4>
+    <p>Professional trimming to improve tree health, safety, and appearance.</p>
+  </div>
+
+  <div class="icon-box">
+    <i class="fas fa-cut"></i>
+    <h4>Tree Shaping</h4>
+    <p>Precision shaping for residential and commercial properties to enhance landscapes.</p>
+  </div>
+
+  <div class="icon-box">
+    <i class="fas fa-recycle"></i>
+    <h4>Stump Removal</h4>
+    <p>Complete stump grinding and removal to leave your property clean and usable.</p>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<h2 class="section-title" id="gallery">Our Work</h2>
 <div class="grid-gallery">
-  <img src="images/lawn.jpg" />
-  <img src="images/scaping.jpg" />
-  <img src="images/stump.jpg" />
-  <img src="images/tree.jpg" />
-  <img src="images/cutting.jpg" />
-  <img src="images/nhai.jpeg" />
+  <img src="images/lawn.jpg">
+  <img src="images/scaping.jpg">
+  <img src="images/stump.jpg">
+  <img src="images/tree.jpg">
+  <img src="images/cutting.jpg">
+  <img src="images/nhai.jpeg">
 
   <video controls src="video/muti.mp4"></video>
   <video controls src="video/miti.mp4"></video>
@@ -197,21 +223,35 @@
   <video controls src="video/shizha.mp4"></video>
 </div>
 
-<!-- Contact -->
+<!-- CONTACT -->
 <h2 class="section-title" id="contact">Contact Us</h2>
-<section style="text-align:center; font-size:18px;">
+<div class="contact">
   <p><strong>Address:</strong> 67 Atterbury Road, Pretoria East</p>
   <p><strong>Phone:</strong> <a href="tel:+27675712844">067 571 2844</a></p>
   <p><strong>Email:</strong> andrewtreefellingservices@gmail.com</p>
   <p>
-    <a href="#"><i class="fab fa-facebook fa-2x"></i></a>&nbsp;
-    <a href="#"><i class="fab fa-whatsapp fa-2x" style="color:lightgreen"></i></a>
+    <a href="https://wa.me/27675712844" target="_blank">
+      <i class="fab fa-whatsapp fa-2x"></i>
+    </a>
   </p>
-</section>
+</div>
 
-<!-- Footer -->
+<!-- MAP -->
+<div class="map">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3584.123456789!2d28.038!3d-26.109"
+    width="100%" height="100%" style="border:0;" loading="lazy">
+  </iframe>
+</div>
+
+<!-- FOOTER -->
 <footer>
-  &copy; 2025 Andrew Tree Felling Services. All rights reserved.
+  <p>Available 24/7 | Emergency Tree Removal | Fully Insured</p>
+  <p>
+    <a href="https://wa.me/27675712844" target="_blank">WhatsApp</a> |
+    <a href="https://facebook.com" target="_blank">Facebook</a>
+  </p>
+  <p>© 2025 Andrew Tree Felling Services. All Rights Reserved.</p>
 </footer>
 
 <script>
@@ -219,30 +259,6 @@
   const navLinks = document.querySelector('nav ul');
   toggle.addEventListener('click', () => navLinks.classList.toggle('show'));
 </script>
-
-  <!-- Live Map Section -->
-  <section class="py-16 bg-gray-100">
-    <h2 class="text-4xl font-bold text-center mb-8 text-green-700">Find Us</h2>
-    <div class="w-full h-96 rounded-xl overflow-hidden shadow-lg">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3584.123456789!2d28.038!3d-26.109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e951cc8d9b777ab%3A0x123abc456def!2sAndrew%20Trees%20Services!5e0!3m2!1sen!2sza!4v1700000000000"
-        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-    </div>
-  </section>
-
-  <!-- Social Media & WhatsApp Section -->
-  <footer class="bg-gray-900 text-white py-10 mt-10">
-    <div class="max-w-6xl mx-auto text-center space-y-6">
-      <h3 class="text-2xl font-semibold">Connect With Us</h3>
-      <div class="flex justify-center space-x-6 text-xl">
-        <a href="https://wa.me/27600000000" target="_blank" class="hover:text-green-400">WhatsApp</a>
-        <a href="https://facebook.com" target="_blank" class="hover:text-blue-400">Facebook</a>
-        <a href="https://instagram.com" target="_blank" class="hover:text-pink-400">Instagram</a>
-      </div>
-      <p class="text-gray-400 text-sm">© 2025 Andrew Tree Services. All rights reserved.</p>
-    </div>
-  </footer>
 
 </body>
 </html>
