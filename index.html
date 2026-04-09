@@ -2,163 +2,453 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrew Tree Felling Services | Pretoria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Andrew Tree Felling | Premium Arborist Pretoria</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a2e0e6a2b1.js" crossorigin="anonymous"></script>
-
+  <!-- Google Fonts + Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Leaflet CSS for modern map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body { background: #f6f6f6; color: #333; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    /* NAVBAR */
-    nav {
-      background: #0b6f20;
-      color: white;
-      padding: 16px 20px;
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafef7;
+      color: #1a2e1f;
+      scroll-behavior: smooth;
+    }
+
+    /* modern scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #e4f3e0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2c7a3e;
+      border-radius: 20px;
+    }
+
+    /* NAVIGATION - glassmorphism + sticky */
+    .navbar {
+      background: rgba(18, 45, 22, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 0.9rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: all 0.2s;
     }
-    nav h1 { font-size: 20px; }
-    nav ul { display: flex; gap: 20px; list-style: none; }
-    nav ul li a { color: white; font-size: 14px; text-transform: uppercase; }
-    nav ul li a:hover { color: yellow; }
-    .menu-toggle { display: none; font-size: 28px; cursor: pointer; }
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #E9F5E1, #b6e6a8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .logo span {
+      color: #f5c542;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links li a {
+      color: #f0f9ec;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .nav-links li a:hover {
+      color: #ffdf7e;
+      transform: translateY(-2px);
+      display: inline-block;
+    }
+    .menu-icon {
+      display: none;
+      font-size: 1.8rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* HERO with character animation (floating leaf character) */
+    .hero {
+      position: relative;
+      min-height: 85vh;
+      background: linear-gradient(125deg, #0f3b1a 0%, #1f5e2d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-content {
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+      animation: fadeUp 0.9s ease-out;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #eafbe3;
+      margin-bottom: 2rem;
+    }
+    .cta-button {
+      background: #f4b942;
+      border: none;
+      padding: 12px 32px;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 50px;
+      color: #1f3b1a;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cta-button:hover {
+      background: #ffcf6e;
+      transform: scale(1.03);
+    }
+    /* animated character (cartoon tree spirit) */
+    .tree-char {
+      position: absolute;
+      bottom: 5%;
+      left: 5%;
+      width: 100px;
+      animation: floatAnim 3s infinite ease-in-out;
+      z-index: 2;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.2));
+    }
+    @keyframes floatAnim {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* section titles */
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      margin: 3rem 0 1rem;
+      color: #1b4d1f;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+      letter-spacing: -0.3px;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 20%;
+      width: 60%;
+      height: 4px;
+      background: linear-gradient(90deg, #78b43a, #f4b942);
+      border-radius: 4px;
+    }
+
+    /* about */
+    .about-modern {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+      backdrop-filter: blur(2px);
+    }
+    .about-modern p {
+      line-height: 1.7;
+      font-size: 1rem;
+      margin: 1rem 0;
+      color: #2c3e2b;
+    }
+
+    /* service cards (beautiful) */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .service-card {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem 1.2rem;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 12px 28px -8px rgba(0,0,0,0.08);
+      border: 1px solid rgba(120, 180, 58, 0.2);
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 36px -12px rgba(35, 110, 25, 0.25);
+      border-color: #b5e6a0;
+    }
+    .service-icon {
+      font-size: 3rem;
+      color: #2f8b3e;
+      margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.7rem;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: #4a5b44;
+    }
+
+    /* gallery modern grid with hover zoom & description */
+    .gallery-container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.8rem;
+    }
+    .gallery-item {
+      background: #fff;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.12);
+    }
+    .gallery-item img, .gallery-item video {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-desc {
+      padding: 0.8rem 1rem 1.2rem;
+      background: white;
+    }
+    .gallery-desc h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #22632e;
+    }
+    .gallery-desc p {
+      font-size: 0.8rem;
+      color: #5c6e55;
+      margin-top: 0.3rem;
+    }
+
+    /* contact section with form that sends to WhatsApp */
+    .contact-section {
+      background: linear-gradient(115deg, #f1f8ed 0%, #e2f0da 100%);
+      border-radius: 2rem;
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    .contact-info {
+      flex: 1.2;
+      min-width: 220px;
+    }
+    .contact-info h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .contact-detail {
+      margin: 1.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-detail i {
+      width: 36px;
+      font-size: 1.4rem;
+      color: #2b823b;
+    }
+    .call-btn {
+      background: #0f6b22;
+      padding: 12px 28px;
+      border-radius: 60px;
+      color: white;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .call-btn:hover {
+      background: #0e571f;
+      transform: scale(1.02);
+    }
+    .contact-form {
+      flex: 1;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1.8rem;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      margin: 8px 0;
+      border: 1px solid #cddfc4;
+      border-radius: 40px;
+      font-family: inherit;
+      background: #fefef7;
+      transition: 0.2s;
+    }
+    .contact-form textarea {
+      border-radius: 24px;
+      resize: vertical;
+    }
+    .contact-form button {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 40px;
+      font-weight: 700;
+      width: 100%;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .contact-form button:hover {
+      background: #128C7E;
+    }
+
+    /* live map modern */
+    .live-map {
+      max-width: 1200px;
+      margin: 2rem auto;
+      border-radius: 2rem;
+      overflow: hidden;
+      box-shadow: 0 18px 30px -8px rgba(0,0,0,0.2);
+      height: 380px;
+      border: 4px solid white;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+      background: #cfe3ca;
+    }
+
+    /* social footer */
+    .footer {
+      background: #102312;
+      color: #cae3c2;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .social-links a {
+      color: #daf1cf;
+      font-size: 1.8rem;
+      margin: 0 0.9rem;
+      transition: 0.2s;
+      display: inline-block;
+    }
+    .social-links a:hover {
+      color: #fbcb5e;
+      transform: translateY(-5px);
+    }
 
     @media (max-width: 768px) {
-      nav ul {
+      .navbar {
+        padding: 0.8rem 1.5rem;
+      }
+      .nav-links {
         display: none;
         flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
         width: 100%;
-        background: #0b6f20;
-        margin-top: 15px;
+        background: #0c3217f2;
+        backdrop-filter: blur(15px);
+        padding: 1.2rem;
+        gap: 1rem;
+        text-align: center;
       }
-      nav ul.show { display: flex; }
-      .menu-toggle { display: block; }
+      .nav-links.show {
+        display: flex;
+      }
+      .menu-icon {
+        display: block;
+      }
+      .tree-char {
+        width: 70px;
+        bottom: 2%;
+      }
+      .contact-section {
+        flex-direction: column;
+      }
+      .live-map {
+        height: 280px;
+      }
     }
-
-    /* HERO */
-    .hero {
-      min-height: 300px;
-      background: url('images/tree.jpg') center/cover no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      text-align: center;
-    }
-    .hero h2 {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 12px;
-      color: white;
-      font-size: clamp(22px, 5vw, 34px);
-    }
-
-    /* TITLES */
-    h2.section-title {
-      text-align: center;
-      margin: 40px 0 20px;
-      font-size: clamp(22px, 4vw, 30px);
-      color: #0b6f20;
-    }
-
-    /* ABOUT */
-    .about {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
-      line-height: 1.7;
-      font-size: 15px;
-    }
-
-    /* SERVICES */
-    .icon-wrap {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    .icon-box {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      text-align: center;
-    }
-    .icon-box i {
-      font-size: 42px;
-      color: #0b6f20;
-      margin-bottom: 10px;
-    }
-    .icon-box p { font-size: 14px; }
-
-    /* GALLERY */
-    .grid-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 15px;
-      padding: 20px;
-    }
-    .grid-gallery img,
-    .grid-gallery video {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      border-radius: 14px;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-    }
-
-    /* CONTACT */
-    .contact {
-      text-align: center;
-      font-size: 16px;
-      padding: 20px;
-    }
-    .contact a { color: #0b6f20; font-weight: 600; }
-
-    /* MAP */
-    .map {
-      max-width: 1000px;
-      margin: 30px auto;
-      height: 380px;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-    }
-
-    @media (max-width: 600px) {
-      .map { height: 300px; }
-    }
-
-    /* FOOTER */
-    footer {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 30px 15px;
-      margin-top: 40px;
-      font-size: 14px;
-    }
-    footer a { color: lightgreen; margin: 0 8px; }
   </style>
 </head>
-
 <body>
 
-<!-- NAV -->
-<nav>
-  <h1>Andrew Tree Felling</h1>
-  <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-  <ul>
+<nav class="navbar">
+  <div class="logo">🌳 Andrew<span> Tree Felling</span></div>
+  <div class="menu-icon" id="menuToggle">
+    <i class="fas fa-bars"></i>
+  </div>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#gallery">Gallery</a></li>
@@ -166,86 +456,176 @@
   </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <h2>Professional Tree Felling & Emergency Services<br>Available 24/7 Across Pretoria</h2>
+<!-- HERO with character animation -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Expert Tree Felling & Emergency Care</h1>
+    <p>Pretoria’s most trusted arborists — 24/7 response, fully insured, workman’s comp coverage.</p>
+    <a href="#contact" class="cta-button"><i class="fas fa-phone-alt"></i> Get Free Quote</a>
+  </div>
+  <!-- character animated (tree mascot) -->
+  <div class="tree-char">
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="55" r="28" fill="#7CB342" stroke="#3E5A2B" stroke-width="2"/>
+      <circle cx="48" cy="48" r="3" fill="white"/>
+      <circle cx="72" cy="48" r="3" fill="white"/>
+      <circle cx="60" cy="62" r="4" fill="#5D4037"/>
+      <path d="M50 80 L60 95 L70 80" fill="#5D4037" stroke="#3E2723" stroke-width="2"/>
+      <rect x="56" y="30" width="8" height="18" fill="#795548" rx="3" />
+      <path d="M35 30 L60 12 L85 30" fill="#558B2F" stroke="#33691E" stroke-width="2"/>
+      <circle cx="60" cy="22" r="6" fill="#FDD835"/>
+    </svg>
+  </div>
+</section>
+
+<!-- About section -->
+<h2 class="section-title" id="about">🌿 About Andrew Tree Felling</h2>
+<div class="about-modern">
+  <p><strong>🌳 Over 15 years of excellence</strong> — fully insured and covered for accidental damages & Workman’s Compensation. We prioritize safety, professionalism, and ecological care.</p>
+  <p>🚨 <strong>24/7 Emergency tree removal</strong> across Pretoria East, Centurion, and surrounds. Our certified team uses modern equipment for fast, clean operations.</p>
 </div>
 
-<!-- ABOUT -->
-<h2 class="section-title" id="about">About Us</h2>
-<div class="about">
-  <p>
-    With over <strong>15 years of experience</strong>, Andrew Tree Felling Services provides professional,
-    fully insured tree solutions across Pretoria.
-  </p>
-  <p>
-    We are covered for <strong>accidental damages and injuries</strong>, including full
-    <strong>Workman’s Compensation</strong>. Emergency call-outs available 24/7.
-  </p>
+<!-- SERVICES with brief description -->
+<h2 class="section-title" id="services">✨ Premium Services</h2>
+<div class="service-grid">
+  <div class="service-card"><div class="service-icon"><i class="fas fa-tree"></i></div><h3>Tree Felling</h3><p>Precision felling of any size, risk assessment, and safe directional control.</p></div>
+  <div class="service-card"><div class="service-icon"><i class="fas fa-leaf"></i></div><h3>Tree Trimming</h3><p>Promote tree health & aesthetics with expert crown thinning & deadwood removal.</p></div>
+  <div class="service-card"><div class="service-icon"><i class="fas fa-cut"></i></div><h3>Tree Shaping</h3><p>Artistic and structural pruning to enhance your landscape naturally.</p></div>
+  <div class="service-card"><div class="service-icon"><i class="fas fa-recycle"></i></div><h3>Stump Grinding</h3><p>Complete stump removal and site cleanup, leaving your yard flawless.</p></div>
 </div>
 
-<!-- SERVICES -->
-<h2 class="section-title" id="services">Our Services</h2>
-<div class="icon-wrap">
-  <div class="icon-box"><i class="fas fa-tree"></i><p><strong>Tree Felling</strong><br>Safe removal of all tree sizes.</p></div>
-  <div class="icon-box"><i class="fas fa-leaf"></i><p><strong>Tree Trimming</strong><br>Health and safety pruning.</p></div>
-  <div class="icon-box"><i class="fas fa-cut"></i><p><strong>Tree Shaping</strong><br>Landscape enhancement.</p></div>
-  <div class="icon-box"><i class="fas fa-recycle"></i><p><strong>Stump Removal</strong><br>Complete stump grinding.</p></div>
+<!-- GALLERY with description for each image/video (using original links) -->
+<h2 class="section-title" id="gallery">📸 Project Gallery</h2>
+<div class="gallery-container">
+  <div class="gallery-grid">
+    <!-- images with description matching service context -->
+    <div class="gallery-item"><img src="images/lawn.jpg" alt="Lawn clearance"><div class="gallery-desc"><h4>Lawn & Site Cleanup</h4><p>After tree felling, we restore your garden to perfection.</p></div></div>
+    <div class="gallery-item"><img src="images/scaping.jpg" alt="Tree scaping"><div class="gallery-desc"><h4>Artistic Tree Shaping</h4><p>Elevating landscape design with natural elegance.</p></div></div>
+    <div class="gallery-item"><img src="images/stump.jpg" alt="Stump grinding"><div class="gallery-desc"><h4>Stump Removal</h4><p>Complete grinding and root removal process.</p></div></div>
+    <div class="gallery-item"><img src="images/tree.jpg" alt="Large tree felling"><div class="gallery-desc"><h4>Large Tree Felling</h4><p>Safe removal near structures with rigging expertise.</p></div></div>
+    <div class="gallery-item"><img src="images/cutting.jpg" alt="Cutting branches"><div class="gallery-desc"><h4>Precision Trimming</h4><p>Clean cuts for healthier regrowth.</p></div></div>
+    <div class="gallery-item"><img src="images/nhai.jpeg" alt="Emergency work"><div class="gallery-desc"><h4>Emergency Response</h4><p>24/7 storm damage and fallen tree removal.</p></div></div>
+    <!-- videos with description -->
+    <div class="gallery-item"><video controls src="video/muti.mp4"></video><div class="gallery-desc"><h4>Time-lapse felling</h4><p>Watch our crew in action, safe & efficient.</p></div></div>
+    <div class="gallery-item"><video controls src="video/miti.mp4"></video><div class="gallery-desc"><h4>Tree climbing trimming</h4><p>Professional arborist techniques.</p></div></div>
+    <div class="gallery-item"><video controls src="video/mati.mp4"></video><div class="gallery-desc"><h4>Stump grinding demo</h4><p>Complete elimination of stumps.</p></div></div>
+    <div class="gallery-item"><video controls src="video/shizha.mp4"></video><div class="gallery-desc"><h4>Branch chipping</h4><p>Eco-friendly debris management.</p></div></div>
+  </div>
 </div>
 
-<!-- GALLERY -->
-<h2 class="section-title" id="gallery">Our Work</h2>
-<div class="grid-gallery">
-  <img src="images/lawn.jpg">
-  <img src="images/scaping.jpg">
-  <img src="images/stump.jpg">
-  <img src="images/tree.jpg">
-  <img src="images/cutting.jpg">
-  <img src="images/nhai.jpeg">
+<!-- CONTACT PAGE FORM that sends straight to WhatsApp -->
+<h2 class="section-title" id="contact">📞 Reach Out</h2>
+<div class="contact-section">
+  <div class="contact-info">
+    <h3>Let's work together</h3>
+    <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><span>67 Atterbury Road, Pretoria East</span></div>
+    <div class="contact-detail"><i class="fas fa-phone-alt"></i><span><strong id="phoneNumber">067 571 2844</strong></span></div>
+    <div class="contact-detail"><i class="fas fa-envelope"></i><span>andrewtreefellingservices@gmail.com</span></div>
+    <!-- call button triggers dialer -->
+    <button class="call-btn" id="callButton"><i class="fas fa-phone"></i> Call Now (Dialer)</button>
+    <div class="social-links" style="margin-top: 20px;">
+      <a href="https://wa.me/27675712844" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
 
-  <video controls src="video/muti.mp4"></video>
-  <video controls src="video/miti.mp4"></video>
-  <video controls src="video/mati.mp4"></video>
-  <video controls src="video/shizha.mp4"></video>
+  <!-- WhatsApp contact form: sends message directly to WA -->
+  <div class="contact-form">
+    <h4 style="margin-bottom: 12px;">✍️ Send us a message → WhatsApp</h4>
+    <form id="waForm">
+      <input type="text" id="nameInput" placeholder="Your name" required>
+      <input type="text" id="subjectInput" placeholder="Service needed (e.g. Tree felling)">
+      <textarea id="messageInput" rows="3" placeholder="Describe your request..." required></textarea>
+      <button type="submit"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+    </form>
+  </div>
 </div>
 
-<!-- CONTACT -->
-<h2 class="section-title" id="contact">Contact Us</h2>
-<div class="contact">
-  <p><strong>Address:</strong> 67 Atterbury Road, Pretoria East</p>
-  <p><strong>Phone:</strong> <a href="tel:+27675712844">067 571 2844</a></p>
-  <p><strong>Email:</strong> andrewtreefellingservices@gmail.com</p>
-  <p>
-    <a href="https://wa.me/27675712844" target="_blank">
-      <i class="fab fa-whatsapp fa-2x"></i>
-    </a>
-  </p>
+<!-- LIVE MAP (interactive Leaflet map with marker) -->
+<div class="live-map">
+  <div id="map"></div>
 </div>
 
-<!-- FIXED LIVE MAP -->
-<div class="map">
-  <iframe
-    src="https://www.google.com/maps?q=Atterbury%20Road%20Pretoria%20East&output=embed"
-    width="100%" height="100%" style="border:0;" loading="lazy" allowfullscreen>
-  </iframe>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <p>24/7 Emergency Tree Services | Fully Insured</p>
-  <p>
-    <a href="https://wa.me/27675712844" target="_blank">WhatsApp</a> |
-    <a href="https://facebook.com" target="_blank">Facebook</a>
-  </p>
-  <p>© 2025 Andrew Tree Felling Services</p>
+<footer class="footer">
+  <div class="social-links">
+    <a href="https://wa.me/27675712844" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+  </div>
+  <p style="margin-top: 1rem;">24/7 Emergency Tree Services | Fully Insured + Workman’s Comp</p>
+  <p>© 2025 Andrew Tree Felling Services — Pretoria's Green Guardians</p>
 </footer>
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  const toggle = document.querySelector('.menu-toggle');
-  const navLinks = document.querySelector('nav ul');
-  toggle.addEventListener('click', () => navLinks.classList.toggle('show'));
-</script>
+  // ---------- Mobile menu toggle ----------
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  if(menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  }
 
+  // ---------- Call button (dialer) ----------
+  const callBtn = document.getElementById('callButton');
+  const phoneRaw = "27675712844"; // international format without '+'
+  callBtn.addEventListener('click', () => {
+    window.location.href = `tel:+${phoneRaw}`;
+  });
+
+  // ---------- WhatsApp form: send straight to WhatsApp business number ----------
+  const waForm = document.getElementById('waForm');
+  const waNumber = "27675712844";   // same as original +27...
+  waForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('nameInput').value.trim();
+    const subject = document.getElementById('subjectInput').value.trim();
+    const message = document.getElementById('messageInput').value.trim();
+    if (!name || !message) {
+      alert("Please provide your name and a message.");
+      return;
+    }
+    let fullMsg = `Hello Andrew Tree Felling!%0A%0A*Name:* ${encodeURIComponent(name)}%0A`;
+    if(subject) fullMsg += `*Service:* ${encodeURIComponent(subject)}%0A`;
+    fullMsg += `*Message:* ${encodeURIComponent(message)}%0A%0A-- Sent from website contact form`;
+    const waLink = `https://wa.me/${waNumber}?text=${fullMsg}`;
+    window.open(waLink, '_blank');
+  });
+
+  // ------- LIVE MAP (Leaflet, accurate location Atterbury Road, Pretoria) ----------
+  const map = L.map('map').setView([-25.7479, 28.2293], 14); // coordinates for Pretoria East / Atterbury
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
+    subdomains: 'abcd',
+    maxZoom: 19,
+  }).addTo(map);
+  // custom marker
+  const greenIcon = L.divIcon({
+    className: 'custom-marker',
+    html: '<div style="background:#2b823b; width: 32px; height: 32px; border-radius: 50%; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.3); border: 2px solid white;"><i class="fas fa-tree" style="color:white; font-size:16px;"></i></div>',
+    iconSize: [32,32],
+    popupAnchor: [0, -16]
+  });
+  L.marker([-25.7479, 28.2293], { icon: greenIcon }).addTo(map)
+    .bindPopup('<b>🌳 Andrew Tree Felling</b><br>67 Atterbury Road, Pretoria East<br>24/7 Emergency').openPopup();
+
+  // Optional: smooth anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if(targetId === "#") return;
+      const targetElem = document.querySelector(targetId);
+      if(targetElem) {
+        e.preventDefault();
+        targetElem.scrollIntoView({ behavior: 'smooth' });
+        if(navLinks.classList.contains('show')) navLinks.classList.remove('show');
+      }
+    });
+  });
+</script>
 </body>
 </html>
-
